@@ -1,12 +1,27 @@
-const http = require('http');
-const httpProxy = require('http-proxy');
+const express = require('express');
+const morganBody = require("morgan-body");
+const bodyParser = require('body-parser');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
-httpProxy.createProxyServer({ target: 'http://localhost:9000' }).listen(8000);
+const HOST = "localhost";
+const PORT = 3000;
+const API_SERVICE_URL = "https://jsonplaceholder.typicode.com/";
 
-http.createServer(function (req, res) {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.write('request successfully proxied!' + '\n' + JSON.stringify(req.headers, true, 2));
-    res.end();
-}).listen(9000);
+const app = express();
 
-console.log('Ready');
+app.use(bodyParser.json());
+
+morganBody(app);
+
+app.put('/funtimes', (req, res) => {
+    res.send('Funtimes!!!');
+});
+
+app.use('/', createProxyMiddleware({
+    target: API_SERVICE_URL,
+    changeOrigin: true
+}));
+
+app.listen(PORT, HOST, () => {
+    console.log(`Starting Proxy at ${HOST}:${PORT}`);
+});

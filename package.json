@@ -3,20 +3,16 @@
   "version": "0.0.1",
   "description": "Simple proxy that logs TCP/IP requests and responses before forwarding",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jlarge11/tcpip-mon.git"
-  },
-  "author": "Justin Large",
+  "repository": "git@github.com:jlarge11/tcpip-mon.git",
+  "author": "Justin Large <justinlarge1974@gmail.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jlarge11/tcpip-mon/issues"
-  },
-  "homepage": "https://github.com/jlarge11/tcpip-mon#readme",
   "dependencies": {
-    "http-server": "^14.0.0"
+    "express": "^4.17.2",
+    "http-proxy-middleware": "^2.0.1",
+    "morgan": "^1.10.0",
+    "morgan-body": "^2.6.6"
+  },
+  "scripts": {
+    "start": "node index.js"
   }
 }
