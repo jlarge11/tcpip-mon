@@ -2,6 +2,7 @@ import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import axios from 'axios';
 import chalk from 'chalk';
+import prettyjson from 'prettyjson';
 
 const cyan = chalk.cyan;
 const yellow = chalk.yellow;
@@ -35,7 +36,7 @@ app.use(createProxyMiddleware({
     onProxyReq: (proxyReq, req, res) => {
         logMessage += `${cyan("Request: ")} ${yellow(req.method)} ${req.url}\n\n`;
         
-        logMessage += `${magenta('Request Headers:')}\n${JSON.stringify(req.headers, null, 2)}\n\n`
+        logMessage += `${magenta('Request Headers:')}\n${prettyjson.render(req.headers)}\n\n`
 
         let body = '';
 
@@ -54,7 +55,7 @@ app.use(createProxyMiddleware({
         const end = process.hrtime(start);
         logMessage += `${cyan('Response:')} ${statusColor(res.statusCode)} `;
         logMessage += `${end[0]}s ${end[1] / 1000000}ms\n\n`;
-        logMessage += `${magenta('Response Headers:')}\n${JSON.stringify(res.getHeaders(), null, 2)}\n\n`
+        logMessage += `${magenta('Response Headers:')}\n${prettyjson.render(res.getHeaders())}\n\n`
         
         let body = '';
 
