@@ -32,6 +32,7 @@ const statusColor = httpStatus => {
 app.use(createProxyMiddleware({
     target: API_SERVICE_URL,
     changeOrigin: true,
+    logLevel: 'silent',
 
     onProxyReq: (proxyReq, req, res) => {
         logMessage += `${cyan("Request: ")} ${yellow(req.method)} ${req.url}\n\n`;
@@ -89,5 +90,5 @@ app.post('/axios', async (req, res) => {
 });
 
 app.listen(PORT, HOST, () => {
-    console.log(`Starting Proxy at ${HOST}:${PORT}`);
+    console.log(`Starting Proxy to ${API_SERVICE_URL} from ${HOST}:${PORT}`);
 });
