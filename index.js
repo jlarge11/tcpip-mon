@@ -1,6 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const morganBody = require("morgan-body");
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const axios = require('axios');
 
@@ -11,13 +9,35 @@ const API_SERVICE_URL = "http://localhost:3001/";
 
 const app = express();
 
-app.use(bodyParser.json());
-
-morganBody(app);
-
 app.post('/proxy', createProxyMiddleware({
     target: API_SERVICE_URL,
-    changeOrigin: true
+    changeOrigin: true,
+
+    onProxyReq: (proxyReq, req, res) => {
+        let body = '';
+
+        req.on('data', data => {
+            data = data.toString('utf-8');
+            body += data;
+        });
+
+        req.on('end', () => {
+            console.log(`Request Body:\n${body}`);
+        });
+    },
+
+    onProxyRes: (proxyRes, req, res) => {
+        let body = '';
+
+        proxyRes.on('data', data => {
+            data = data.toString('utf-8');
+            body += data;
+        });
+
+        proxyRes.on('end', () => {
+            console.log(`Response Body:\n${body}`);
+        });
+    }
 }));
 
 app.post('/axios', async (req, res) => {
