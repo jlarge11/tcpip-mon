@@ -12,8 +12,7 @@ const red = chalk.red;
 
 const HOST = "localhost";
 const PORT = 3000;
-// const API_SERVICE_URL = "https://jsonplaceholder.typicode.com/";
-const API_SERVICE_URL = "http://localhost:3001/";
+const API_SERVICE_URL = "https://jsonplaceholder.typicode.com";
 
 const app = express();
 
@@ -35,7 +34,7 @@ app.use(createProxyMiddleware({
     logLevel: 'silent',
 
     onProxyReq: (proxyReq, req, res) => {
-        logMessage += `${cyan("Request: ")} ${yellow(req.method)} ${req.url}\n\n`;
+        logMessage += `${cyan("Request: ")} ${yellow(req.method)} ${API_SERVICE_URL}${req.url}\n\n`;
         
         logMessage += `${magenta('Request Headers:')}\n${prettyjson.render(req.headers)}\n\n`
 
@@ -73,21 +72,6 @@ app.use(createProxyMiddleware({
         });
     }
 }));
-
-app.post('/axios', async (req, res) => {
-    await axios.post(`${API_SERVICE_URL}/axios`, {
-       "userId":9999,
-       "title":"Buy groceries using Axios",
-       "body":"Buy a bunch of food using Axios"
-    });
-
-    res.status(201).json({
-        "id": 8999,
-        "userId": 9999,
-        "title":"Buy groceries using Axios",
-        "body":"Buy a bunch of food using Axios"
-    });
-});
 
 app.listen(PORT, HOST, () => {
     console.log(`Starting Proxy to ${API_SERVICE_URL} from ${HOST}:${PORT}`);
