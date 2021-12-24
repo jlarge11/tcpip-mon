@@ -27,7 +27,7 @@ app.post('/axios', async (req, res) => {
        "body":"Buy a bunch of food using Axios"
     });
 
-    res.status(200).json({
+    res.status(201).json({
         "id": 8999,
         "userId": 9999,
         "title":"Buy groceries using Axios",
