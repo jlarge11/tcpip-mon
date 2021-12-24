@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 
 morganBody(app);
 
-app.post('/hpm', createProxyMiddleware({
+app.post('/proxy', createProxyMiddleware({
     target: API_SERVICE_URL,
     changeOrigin: true
 }));
