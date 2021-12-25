@@ -1,8 +1,12 @@
+#!/usr/bin/env node
+
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import chalk from 'chalk';
 import prettyjson from 'prettyjson';
 import { v4 as uuid } from 'uuid';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
 const cyan = chalk.cyan;
 const yellow = chalk.yellow;
@@ -10,17 +14,11 @@ const magenta = chalk.magenta;
 const green = chalk.green;
 const red = chalk.red;
 
-const HOST = "localhost";
-const PORT = 3000;
-const API_SERVICE_URL = "https://jsonplaceholder.typicode.com";
 const TCPIP_MON_ID = 'tcpip-mon-id';
 
 const app = express();
 
 const executions = {};
-
-let logMessage = '';
-let start;
 
 const formatJson = jsonString => {
     const obj = JSON.parse(jsonString);
@@ -31,8 +29,16 @@ const statusColor = httpStatus => {
     return httpStatus < 400 ? green(httpStatus) : red(httpStatus);
 }
 
+const argv = yargs(hideBin(process.argv))
+    .command('$0 <localPort> <destinationUrl>')
+    .example('$0 3000 https://jsonplaceholder.typicode.com')
+    .help()
+    .alias('v', 'version')
+    .alias('h', 'help')
+    .argv;
+
 app.use(createProxyMiddleware({
-    target: API_SERVICE_URL,
+    target: argv.destinationUrl,
     changeOrigin: true,
     logLevel: 'silent',
 
@@ -40,13 +46,15 @@ app.use(createProxyMiddleware({
         const tcpipMonId = uuid();
         res.setHeader(TCPIP_MON_ID, tcpipMonId);
 
-        const execution = { logMessage, start };
+        const execution = {
+            logMessage: '\n=======================================================================\n'
+        };
+
         executions[tcpipMonId] = execution;
 
-        execution.logMessage = '\n=======================================================================\n';
         execution.logMessage += `${new Date()}\n\n`;
 
-        execution.logMessage += `${cyan("Request: ")} ${yellow(req.method)} ${API_SERVICE_URL}${req.url}\n\n`;
+        execution.logMessage += `${cyan("Request: ")} ${yellow(req.method)} ${argv.destinationUrl}${req.url}\n\n`;
         
         execution.logMessage += `${magenta('Request Headers:')}\n${prettyjson.render(req.headers)}\n\n`
 
@@ -79,13 +87,13 @@ app.use(createProxyMiddleware({
         });
 
         proxyRes.on('end', () => {
-            execution.logMessage += `${magenta('Response Body:')}\n${formatJson(body)}\n\n`;
+            execution.logMessage += `${magenta('Response Body:')}\n${formatJson(body)}`;
             console.log(execution.logMessage);
             delete executions[TCPIP_MON_ID];
         });
     }
 }));
 
-app.listen(PORT, HOST, () => {
-    console.log(`Starting Proxy to ${API_SERVICE_URL} from ${HOST}:${PORT}`);
+app.listen(argv.localPort, 'localhost', () => {
+    console.log(`Starting Proxy to ${argv.destinationUrl} from ${argv.localPort}`);
 });
