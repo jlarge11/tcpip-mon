@@ -1,0 +1,4 @@
+#!/bin/bash
+
+newVersion=$1
+echo $newVersion
