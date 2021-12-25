@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --experimental-json-modules
 
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
@@ -7,6 +7,7 @@ import prettyjson from 'prettyjson';
 import { v4 as uuid } from 'uuid';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import packageConfig from './package.json';
 
 const cyan = chalk.cyan;
 const yellow = chalk.yellow;
@@ -33,8 +34,7 @@ const argv = yargs(hideBin(process.argv))
     .command('$0 <localPort> <destinationUrl>')
     .example('$0 3000 https://jsonplaceholder.typicode.com')
     .help()
-    .version()
-    .alias('v', 'version')
+    .version(packageConfig.version)
     .alias('h', 'help')
     .argv;
 
