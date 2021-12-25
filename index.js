@@ -33,6 +33,7 @@ const argv = yargs(hideBin(process.argv))
     .command('$0 <localPort> <destinationUrl>')
     .example('$0 3000 https://jsonplaceholder.typicode.com')
     .help()
+    .version()
     .alias('v', 'version')
     .alias('h', 'help')
     .argv;
