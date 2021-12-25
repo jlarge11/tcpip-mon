@@ -43,6 +43,9 @@ app.use(createProxyMiddleware({
         const execution = { logMessage, start };
         executions[tcpipMonId] = execution;
 
+        execution.logMessage = '\n=======================================================================\n';
+        execution.logMessage += `${new Date()}\n\n`;
+
         execution.logMessage += `${cyan("Request: ")} ${yellow(req.method)} ${API_SERVICE_URL}${req.url}\n\n`;
         
         execution.logMessage += `${magenta('Request Headers:')}\n${prettyjson.render(req.headers)}\n\n`
@@ -77,7 +80,6 @@ app.use(createProxyMiddleware({
 
         proxyRes.on('end', () => {
             execution.logMessage += `${magenta('Response Body:')}\n${formatJson(body)}\n\n`;
-            execution.logMessage += '=======================================================================';
             console.log(execution.logMessage);
             delete executions[TCPIP_MON_ID];
         });
