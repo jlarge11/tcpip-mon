@@ -36,6 +36,7 @@ const argv = yargs(hideBin(process.argv))
     .help()
     .version(packageConfig.version)
     .alias('h', 'help')
+    .alias('v', 'version')
     .argv;
 
 app.use(createProxyMiddleware({
