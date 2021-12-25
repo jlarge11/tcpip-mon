@@ -1,6 +1,5 @@
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import axios from 'axios';
 import chalk from 'chalk';
 import prettyjson from 'prettyjson';
 import { v4 as uuid } from 'uuid';
