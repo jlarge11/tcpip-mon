@@ -15,7 +15,8 @@
     "morgan": "^1.10.0",
     "morgan-body": "^2.6.6",
     "nodemon": "^2.0.15",
-    "prettyjson": "^1.2.1"
+    "prettyjson": "^1.2.1",
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "start": "nodemon index.js"
