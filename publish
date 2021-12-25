@@ -1,4 +1,11 @@
 #!/bin/bash
 
-newVersion=$1
-echo $newVersion
+set -e
+
+versionType=$1
+
+npm version $versionType | xargs git push -u origin
+
+git push
+
+npm publish --access=public
