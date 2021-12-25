@@ -65,7 +65,7 @@ app.use(createProxyMiddleware({
         const tcpipMonId = res.getHeader(TCPIP_MON_ID);
         const execution = executions[tcpipMonId];
         const end = process.hrtime(execution.start);
-        execution.logMessage += `${cyan('Response:')} ${statusColor(res.statusCode)} `;
+        execution.logMessage += `${cyan('Response:')} ${statusColor(res.statusCode)} : `;
         execution.logMessage += `${end[0]}s ${end[1] / 1000000}ms\n\n`;
         execution.logMessage += `${magenta('Response Headers:')}\n${prettyjson.render(res.getHeaders())}\n\n`
         
