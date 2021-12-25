@@ -1,6 +1,6 @@
 {
   "name": "@jlarge11/tcpip-mon",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "type": "module",
   "description": "Simple proxy that logs TCP/IP requests and responses before forwarding",
   "main": "index.js",
