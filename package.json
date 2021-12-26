@@ -7,6 +7,9 @@
   "repository": "git@github.com:jlarge11/tcpip-mon.git",
   "author": "Justin Large <justinlarge1974@gmail.com>",
   "license": "MIT",
+
+  "keywords": [ "tcpip", "rest", "monitor", "json"],
+
   "dependencies": {
     "chalk": "^5.0.0",
     "express": "^4.17.2",
