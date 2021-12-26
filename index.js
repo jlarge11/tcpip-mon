@@ -7,12 +7,28 @@ import prettyjson from 'prettyjson';
 import { v4 as uuid } from 'uuid';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { fileURLToPath } from 'url';
+
 
 const cyan = chalk.cyan;
 const yellow = chalk.yellow;
 const magenta = chalk.magenta;
 const green = chalk.green;
 const red = chalk.red;
+
+console.log('================================================');
+console.log('process.argv[1] =', process.argv[1]);
+console.log('import.meta.url =', import.meta.url);
+console.log('fileURLToPath(import.meta.url =', fileURLToPath(import.meta.url));
+console.log('process.cwd() =', process.cwd());
+console.log('__dirname =', __dirname);
+console.log('require.main.filename =', require.main.filename);
+
+console.log('================================================');
+
+console.log(process.env);
+
+console.log('================================================');
 
 const TCPIP_MON_ID = 'tcpip-mon-id';
 
