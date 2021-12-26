@@ -16,10 +16,6 @@
     "uuid": "^8.3.2",
     "yargs": "^17.3.1"
   },
-  "files": [
-    "index.js",
-    "package.json"
-  ],
   "scripts": {
     "dev": "nodemon --experimental-json-modules index.js 3000 https://jsonplaceholder.typicode.com"
   },
