@@ -8,8 +8,6 @@ import { v4 as uuid } from 'uuid';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-console.log(JSON.stringify(process.env));
-
 const cyan = chalk.cyan;
 const yellow = chalk.yellow;
 const magenta = chalk.magenta;
