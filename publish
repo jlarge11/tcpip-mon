@@ -8,4 +8,4 @@ npm version $versionType | xargs git push -u origin
 
 git push
 
-yarn publish --access=public
+yarn publish --access=public --non-interactive
