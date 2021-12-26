@@ -7,7 +7,8 @@ import prettyjson from 'prettyjson';
 import { v4 as uuid } from 'uuid';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { readFileSync } from 'fs';
+
+console.log(JSON.stringify(env));
 
 const cyan = chalk.cyan;
 const yellow = chalk.yellow;
