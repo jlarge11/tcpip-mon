@@ -17,7 +17,7 @@ const red = chalk.red;
 
 const TCPIP_MON_ID = 'tcpip-mon-id';
 
-console.log(JSON.stringify(process.env));
+console.log(JSON.stringify(process.argv));
 
 const version = JSON.parse(readFileSync(`${process.cwd()}/package.json`, 'utf-8')).version;
 
