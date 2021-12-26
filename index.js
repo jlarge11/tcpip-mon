@@ -7,6 +7,9 @@ import prettyjson from 'prettyjson';
 import { v4 as uuid } from 'uuid';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import fs from 'fs';
 
 const cyan = chalk.cyan;
 const yellow = chalk.yellow;
@@ -19,6 +22,12 @@ const TCPIP_MON_ID = 'tcpip-mon-id';
 const app = express();
 
 const executions = {};
+
+const getVersion = () => {
+    const packageJsonFolder = dirname(fileURLToPath(import.meta.url));
+    const packageJson = JSON.parse(fs.readFileSync(`${packageJsonFolder}/package.json`, 'utf-8'));
+    return packageJson.version;
+};
 
 const formatJson = jsonString => {
     const obj = JSON.parse(jsonString);
@@ -33,7 +42,9 @@ const argv = yargs(hideBin(process.argv))
     .command('$0 <localPort> <destinationUrl>')
     .example('$0 3000 https://jsonplaceholder.typicode.com')
     .help()
+    .version(getVersion())
     .alias('h', 'help')
+    .alias('v', 'version')
     .argv;
 
 app.use(createProxyMiddleware({
