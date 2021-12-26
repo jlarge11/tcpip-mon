@@ -17,10 +17,6 @@ const red = chalk.red;
 
 const TCPIP_MON_ID = 'tcpip-mon-id';
 
-console.log(JSON.stringify(process.argv));
-
-const version = JSON.parse(readFileSync(`${process.cwd()}/package.json`, 'utf-8')).version;
-
 const app = express();
 
 const executions = {};
@@ -38,9 +34,7 @@ const argv = yargs(hideBin(process.argv))
     .command('$0 <localPort> <destinationUrl>')
     .example('$0 3000 https://jsonplaceholder.typicode.com')
     .help()
-    .version(version)
     .alias('h', 'help')
-    .alias('v', 'version')
     .argv;
 
 app.use(createProxyMiddleware({
