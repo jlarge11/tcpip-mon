@@ -1,4 +1,4 @@
-#!/usr/bin/env node --experimental-json-modules
+#!/usr/bin/env node
 
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
@@ -7,7 +7,7 @@ import prettyjson from 'prettyjson';
 import { v4 as uuid } from 'uuid';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import packageConfig from './package.json';
+import { readFileSync } from 'fs';
 
 const cyan = chalk.cyan;
 const yellow = chalk.yellow;
@@ -16,6 +16,8 @@ const green = chalk.green;
 const red = chalk.red;
 
 const TCPIP_MON_ID = 'tcpip-mon-id';
+
+const version = JSON.parse(readFileSync('package.json', 'utf-8')).version;
 
 const app = express();
 
@@ -34,7 +36,7 @@ const argv = yargs(hideBin(process.argv))
     .command('$0 <localPort> <destinationUrl>')
     .example('$0 3000 https://jsonplaceholder.typicode.com')
     .help()
-    .version(packageConfig.version)
+    .version(version)
     .alias('h', 'help')
     .alias('v', 'version')
     .argv;
