@@ -8,6 +8,8 @@ import { v4 as uuid } from 'uuid';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import fs from 'fs';
 
 
 const cyan = chalk.cyan;
@@ -17,13 +19,13 @@ const green = chalk.green;
 const red = chalk.red;
 
 console.log('================================================');
-console.log('process.argv[1] =', process.argv[1]);
-console.log('import.meta.url =', import.meta.url);
-console.log('fileURLToPath(import.meta.url =', fileURLToPath(import.meta.url));
-console.log('process.cwd() =', process.cwd());
-console.log('__dirname =', __dirname);
-console.log('require.main.filename =', require.main.filename);
+console.log('fileURLToPath(import.meta.url) =', fileURLToPath(import.meta.url));
+console.log('dirname(fileURLToPath(import.meta.url)) =', dirname(fileURLToPath(import.meta.url)));
 
+const packageJsonFolder = dirname(fileURLToPath(import.meta.url));
+const version = JSON.parse(fs.readFileSync(`${packageJsonFolder}/package.json`, 'utf-8')).version;
+
+console.log('version =', version);
 console.log('================================================');
 
 console.log(process.env);
